@@ -1,4 +1,4 @@
-from logger import input_data, print_data, put_data, delete_data
+from registrar import input_data, print_data, put_data, delete_data
 
 
 def interface():
@@ -13,7 +13,7 @@ def interface():
         command = int(input("Введите номер операции: "))
 
         while command < 1 or command > 5:
-            print('Ты дурак?! Даю тебе последний шанс')
+            print('Неверно! Даю тебе последний шанс')
             command = int(input("Введите номер операции: "))
 
         if command == 1:

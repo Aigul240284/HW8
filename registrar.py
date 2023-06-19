@@ -1,4 +1,4 @@
-from data_create import name_data, surname_data, phone_data, address_data
+from data_input import name_data, surname_data, phone_data, address_data
 
 
 def input_data():
@@ -14,11 +14,11 @@ def input_data():
                     f"{address}\n\n"
                     f"2 Вариант:\n\n"
                     f"{surname};{name};{phone};{address}\n\n"
-                    f"Выберите номер варианта: "))
+                    f"Выберите номер варианта: 1й или 2й"))
 
     while var != 1 and var != 2:
-        print('Ты дурак?! Даю тебе последний шанс')
-        var = int(input("Введите номер варианта: "))
+        print('Неверно!')
+        var = int(input("Введите номер варианта - 1й или 2й: "))
 
     if var == 1:
         with open('data_first_variant.csv', 'a', encoding='utf-8') as file:
@@ -51,17 +51,19 @@ def print_data():
 def put_data():
     print('Из какого файла Вы хотите изменить данные?')
     data_first, data_second = print_data()
-    number_file = int(input('Введите номер файла: '))
+    number_file = int(input('Введите номер файла 1й или 2й: '))
 
     while number_file != 1 and number_file != 2:
-        print('Ты дурак?! Даю тебе последний шанс')
-        number_file = int(input('Введите номер файла: '))
+        print('Неверно! Даю тебе последний шанс')
+        number_file = int(input('Введите номер файла,1й или 2й: '))
 
-    if number_file == 1:  # Можно сделать нумерацию внутри файла
-        print("Какую именно запись по счету Вы хотите изменить?")
-        number_journal = int(input('Введите номер записи: '))
-        number_journal -= 1
-        # Можно добавить проверку, чтобы человек не выходил за пределы записей
+    if number_file == 1:  
+        print("Кого именно Вы хотите изменить?")
+        name1=input("Введите имя из спрвочника, данные котрого будут изменены: ")
+        surname1=input("Введите фамилию из спрвочника, данные котрого будут изменены: ")
+        for i in range(len(data_first)):
+            if name1 and surname1 in data_first[i]:
+                number_journal = i        
         print(f'Изменить данную запись\n{data_first[number_journal]}')
         name = name_data()
         surname = surname_data()
@@ -72,11 +74,14 @@ def put_data():
         with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_first))
         print('Изменения успешно сохранены!')
+        print_data
     else:
-        print("Какую именно запись по счету Вы хотите изменить?")
-        number_journal = int(input('Введите номер записи: '))
-        number_journal -= 1
-        # Можно добавить проверку, чтобы человек не выходил за пределы записи
+        print("Кого именно Вы хотите изменить?")
+        name1=input("Введите имя из спрвочника, данные котрого будут изменены: ")
+        surname1=input("Введите фамилию из спрвочника, данные котрого будут изменены: ")
+        for i in range(len(data_second)):
+            if name1 and surname1 in data_second[i]:
+                number_journal = i        
         print(f'Изменить данную запись\n{data_second[number_journal]}')
         name = name_data()
         surname = surname_data()
@@ -86,33 +91,42 @@ def put_data():
                       data_second[number_journal + 1:]
         with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_second))
-        print('Изменения успешно сохранены!')  # Можно вывести конечные данные
+        print('Изменения успешно сохранены!')
+        print_data()
 
 
 def delete_data():
-    print('Из какого файла Вы хотите удалить данные?')
+    print('Из какого файла Вы хотите удалить данные, из 1го или 2го?')
     data_first, data_second = print_data()
-    number_file = int(input('Введите номер файла: '))
+    number_file = int(input('Введите номер файла 1й или 2й: '))
 
     while number_file != 1 and number_file != 2:
-        print('Ты дурак?! Даю тебе последний шанс')
-        number_file = int(input('Введите номер файла: '))
+        print('Неверно!')
+        number_file = int(input('Введите номер файла, 1й или 2й: '))
 
-    if number_file == 1:  # Можно сделать нумерацию внутри файла
-        print("Какую именно запись по счету Вы хотите удалить?")
-        number_journal = int(input('Введите номер записи: '))
-        # Можно добавить проверку, чтобы человек не выходил за пределы записи
-        print(f'Удалить данную запись\n{data_first[number_journal - 1]}')
+    if number_file == 1:  
+        print("Кого именно вы хотите удалить из списка? ")
+        name1=input("Введите имя: ")
+        surname1=input("Введите фамилию: ")
+        for i in range(len(data_first)):
+            if name1 and surname1 in data_first[i]:
+                number_journal = i
+                print(f'Удалить данную запись\n{data_first[number_journal]}')
         data_first = data_first[:number_journal] + data_first[number_journal + 1:]
         with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_first))
         print('Изменения успешно сохранены!')
+        print_data()
     else:
-        print("Какую именно запись по счету Вы хотите удалить?")
-        number_journal = int(input('Введите номер записи: '))
-        # Можно добавить проверку, чтобы человек не выходил за пределы записи
-        print(f'Удалить данную запись\n{data_second[number_journal - 1]}')
+        print("Кого именно вы хотите удалить из списка? ")
+        name2=input("Введите имя: ")
+        surname2=input("Введите фамилию: ")
+        for i in range(len(data_second)):
+            if name2 and surname2 in data_second[i]:
+                number_journal = i
+                print(f'Удалить данную запись\n{data_second[number_journal]}')
         data_second = data_second[:number_journal] + data_second[number_journal + 1:]
         with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_second))
-        print('Изменения успешно сохранены!')  # Можно вывести конечные данные
+        print('Изменения успешно сохранены!')  
+        print_data()
